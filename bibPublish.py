@@ -42,8 +42,9 @@ class Entry():
                 value = self.attribute_expansions[k].format(value)
             entry[k] = value
 
+        entry['author'] = self.format_author(entry)
         entry['coins'] = ''
-        entry['outlet'] = self.get_outlet(entry)
+        entry['outlet'] = self.format_outlet(entry)
         entry['citation'] = '[{ID}] {author} ({year}) "{title}", ' \
             '{outlet}'.format(**entry)
         entry['_bibpublish'] = ''
@@ -53,7 +54,18 @@ class Entry():
                 entry['_'+k] = self.links[k].format(**entry)
         return entry
 
-    def get_outlet(self, entry):
+    def format_author(self, entry):
+        authors = []
+        for author in entry['author'].split(' and '):
+            if ',' not in author:
+                firstname, lastname = author.rsplit(' ')
+                author = f'{lastname}, {firstname}'
+            authors.append(author)
+
+        return authors[0] if len(authors) == 1 else \
+            '{} and {}'.format(', '.join(authors[:-1]), authors[-1])
+
+    def format_outlet(self, entry):
         outlet = [entry.get('journal', None),
                   entry.get('booktitle', None),
                   f'ISBN: {entry["isbn"]}' if 'isbn' in entry else None,
@@ -95,7 +107,7 @@ class Template():
 
     def generate_abstract(self, entry):
         if 'abstract' in entry:
-            with open(os.path.join(self.output_dir, (entry['ID'] + '.bib')),
+            with open(os.path.join(self.output_dir, (entry['ID'] + '.html')),
                       'w') as f:
                 f.write(self.abstract_template.format(**entry))
 
