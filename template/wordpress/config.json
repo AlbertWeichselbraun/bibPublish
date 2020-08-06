@@ -1,0 +1,29 @@
+{"output_order": ["article",
+                  "incollection",
+                  "inproceedings",
+                  "book",
+                  "unpublished",
+                  "phdthesis",
+                  "mastersthesis"],
+ "string_replacements": {"--": "-",
+                         "\\&": "&amp",
+			 "\n": " ",
+			 "{": "",
+		         "}": "",
+                         "\\_": "_"},
+
+ "attribute_expansions": {"booktitle": " {}",
+                          "editor": ", Ed. {}",
+                          "number": "({}):",
+                          "volume": " {}",
+                          "doi": "doi:{}",
+                          "address": ", {}"},
+ "links": {
+            "abstract_url": "<a class=\"abstract\" title=\"Abstract\" href=\"{abstract_url}\">[Abstract]</a>",
+            "url": "<a class=\"related\" title=\"{title}\" href=\"{url}\">[URL]</a>",
+            "eprint": "<a class=\"download\" title=\"{title}\" href=\"{eprint}\">[PDF]</a>",
+            "bibtex": "<a class=\"bib\" title=\"Citation\" href=\"{bibtex}\">[BIB]</a>",
+            "title": "<a class=\"title\" title=\"{title}\" href=\"{eprint}\">{title}</a>",
+            "doi": "<a class=\"doi\" title=\"DOI\" href=\"http://dx.doi.org/{doi}\">doi:{doi}</a>"
+           }
+}

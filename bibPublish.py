@@ -58,7 +58,7 @@ class Entry():
         authors = []
         for author in entry['author'].split(' and '):
             if ',' not in author:
-                firstname, lastname = author.rsplit(' ')
+                firstname, lastname = author.rsplit(' ', 1)
                 author = f'{lastname}, {firstname}'
             authors.append(author)
 
@@ -117,7 +117,7 @@ class Template():
             html.extend(self.generate_section(section))
 
         with open(os.path.join(self.output_dir, 'index.html'), 'w') as f:
-            f.write('\n'.join(html))
+            f.write('\n'.join(html).replace(' . ', '. '))
 
 
 def parse_options():
