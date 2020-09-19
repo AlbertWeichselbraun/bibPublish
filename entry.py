@@ -5,9 +5,9 @@
 from typing import Dict
 
 
-def format_author(self, entry):
+def format_author(author_entry):
     authors = []
-    for author in entry['author'].split(' and '):
+    for author in author_entry.replace('\n', ' ').split(' and '):
         if ',' not in author:
             firstname, lastname = author.rsplit(' ', 1)
             author = f'{lastname}, {firstname}'
@@ -17,7 +17,7 @@ def format_author(self, entry):
         '{} and {}'.format(', '.join(authors[:-1]), authors[-1])
 
 
-def format_outlet(self, entry):
+def format_outlet(entry):
     outlet = [entry.get('journal', None),
               entry.get('booktitle', None),
               f'ISBN: {entry["isbn"]}' if 'isbn' in entry else None,
