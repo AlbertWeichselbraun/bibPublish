@@ -10,12 +10,14 @@ import bibtexparser
 import os.path
 import sys
 
+from entry import Entry
+from json import load
 from typing import Dict
 from bibtexparser.bparser import BibTexParser
 from optparse import OptionParser
 
 DEFAULT_TEMPLATE = 'wordpress'
-TEMPLATE_PATH = os.path.expanduser('~/.bibTexSuite/templates')
+TEMPLATE_PATH = './template'
 TEMPLATE_CONFIG = 'config.json'
 
 REQUIRED_ATTRIBUTES = ('title', 'volume', 'number', 'pages', 'note',
@@ -23,48 +25,6 @@ REQUIRED_ATTRIBUTES = ('title', 'volume', 'number', 'pages', 'note',
 
 GENERATED_ATTRIBUTES = ('citation', 'coins', '_bibpublish')
 
-
-class Entry():
-
-    def __init__(self, config):
-        self.cleanup = config['string_replacements']
-        self.attribute_expansions = config['attribute_expansions']
-        self.links = config['links']
-
-    def normalize(self, value):
-        for _search, _replace in self.cleanup.items():
-            value = value.replace(_search, _replace)
-        return value
-
-    def format_entry(self, entry: Dict[str, str]) -> Dict[str, str]:
-        '''
-        Returns: a dictionary containing all keys formatted according to
-            the format strings specified in the FORMAT dictionary.
-        '''
-        res = {}
-        for key, format_string in self.FORMAT.items():
-            res[key] = format_string.format(**entry) if key in entry else ''
-        return res
-
-    def format_author(self, entry):
-        authors = []
-        for author in entry['author'].split(' and '):
-            if ',' not in author:
-                firstname, lastname = author.rsplit(' ', 1)
-                author = f'{lastname}, {firstname}'
-            authors.append(author)
-
-        return authors[0] if len(authors) == 1 else \
-            '{} and {}'.format(', '.join(authors[:-1]), authors[-1])
-
-    def format_outlet(self, entry):
-        outlet = [entry.get('journal', None),
-                  entry.get('booktitle', None),
-                  f'ISBN: {entry["isbn"]}' if 'isbn' in entry else None,
-                  f'pages: {entry["pages"]}' if 'pages' in entry else None,
-                  f'{entry["volume"]}({entry["number"]})'
-                  if 'volume' in entry and 'number' in entry else None]
-        return ", ".join(filter(None, outlet))
 
 
 class Template():
@@ -76,8 +36,10 @@ class Template():
         self.abstract_template = open(os.path.join(template_path,
                                                    'abstract.html')).read()
         sys.path.append(template_path)
-        from template_config import (ENTRY_ORDER, ENTRY_FORMAT,
-                                     ATTRIBUTE_CLEANUP_RULES, ATTRIBUTE_FORMAT)
+        self.config = load(open(os.path.join(template_path,
+                                             TEMPLATE_CONFIG)))
+#       from template_config import (ENTRY_ORDER, ENTRY_FORMAT,
+#                                    ATTRIBUTE_CLEANUP_RULES, ATTRIBUTE_FORMAT)
 
     def _load_template(self, section, template_type):
         return open(os.path.join(self.template_path,
@@ -93,7 +55,7 @@ class Template():
         html = [self._load_template(section, '-head.html')]
         entry_template = self._load_template(section, '-entry.html')
         for entry in self._get_relevant_entries(section):
-            entry = Entry(self.config).prepare(entry)
+            entry = Entry(self.config).format_entry(entry)
             html.append(entry_template.format(**entry))
             self.generate_abstract(entry)
         html.append(self._load_template(section, '-foot.html'))
