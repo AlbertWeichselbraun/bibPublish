@@ -8,9 +8,11 @@ bibPublish - publishes bibtex files
 
 import bibtexparser
 import os.path
+import sys
+
+from typing import Dict
 from bibtexparser.bparser import BibTexParser
 from optparse import OptionParser
-from json import load
 
 DEFAULT_TEMPLATE = 'wordpress'
 TEMPLATE_PATH = os.path.expanduser('~/.bibTexSuite/templates')
@@ -34,25 +36,15 @@ class Entry():
             value = value.replace(_search, _replace)
         return value
 
-    def prepare(self, entry):
-        keys = set(entry.keys()).union(REQUIRED_ATTRIBUTES)
-        for k in keys:
-            value = self.normalize(entry[k]) if k in entry else ''
-            if k in self.attribute_expansions and value:
-                value = self.attribute_expansions[k].format(value)
-            entry[k] = value
-
-        entry['author'] = self.format_author(entry)
-        entry['coins'] = ''
-        entry['outlet'] = self.format_outlet(entry)
-        entry['citation'] = '[{ID}] {author} ({year}) "{title}", ' \
-            '{outlet}'.format(**entry)
-        entry['_bibpublish'] = ''
-
-        for k in self.links:
-            if k in entry:
-                entry['_'+k] = self.links[k].format(**entry)
-        return entry
+    def format_entry(self, entry: Dict[str, str]) -> Dict[str, str]:
+        '''
+        Returns: a dictionary containing all keys formatted according to
+            the format strings specified in the FORMAT dictionary.
+        '''
+        res = {}
+        for key, format_string in self.FORMAT.items():
+            res[key] = format_string.format(**entry) if key in entry else ''
+        return res
 
     def format_author(self, entry):
         authors = []
@@ -81,9 +73,11 @@ class Template():
         self.template_path = template_path
         self.bibtex_entries = bibtex_entries
         self.output_dir = output_dir
-        self.config = load(open(os.path.join(template_path, TEMPLATE_CONFIG)))
         self.abstract_template = open(os.path.join(template_path,
                                                    'abstract.html')).read()
+        sys.path.append(template_path)
+        from template_config import (ENTRY_ORDER, ENTRY_FORMAT,
+                                     ATTRIBUTE_CLEANUP_RULES, ATTRIBUTE_FORMAT)
 
     def _load_template(self, section, template_type):
         return open(os.path.join(self.template_path,
@@ -133,7 +127,6 @@ def parse_options():
                       help=f"specify another template path ({TEMPLATE_PATH}))")
 
     return parser.parse_args()
-
 
 
 '''
