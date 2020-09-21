@@ -1,7 +1,7 @@
 bibPublish
 ==========
 
-Publishes bibTex bibliographies.
+Publishes bibTex bibliographies::
 
   Usage: publish.py [options]
   
