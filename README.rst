@@ -20,4 +20,4 @@ Supported templates
 
 Background
 ----------
-bibPublish is a Python 3+ compatible replacement for the [bibTexSuite](https://github.com/AlbertWeichselbraun/bibTexSuite).
+bibPublish is a Python 3+ compatible replacement for `bibTexSuite https://github.com/AlbertWeichselbraun/bibTexSuite`_.
