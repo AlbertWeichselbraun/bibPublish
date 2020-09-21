@@ -15,9 +15,9 @@ import os.path
 
 TEMPLATE_PATH = os.path.dirname(__file__)
 
+# name of the main output file
 OUTFILE = 'publications.tex'
 
-ENTRY_ORDER = 'article',
 ENTRY_ORDER = ('article', 'inproceedings', 'incollection', 'book',
                'phdthesis', 'mastersthesis')
 
