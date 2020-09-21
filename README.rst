@@ -1,0 +1,4 @@
+bibPublish
+==========
+
+Publishes bibTex bibliographies.

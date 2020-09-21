@@ -3,6 +3,9 @@
 '''
 bibPublish template configuration
 '''
+from os.path import basename
+
+TEMPLATE_PATH = basename(__file__)
 
 ENTRY_ORDER = ('article', 'incollection', 'inproceedings', 'book',
                'unpublished', 'phdthesis', 'mastersthesis')

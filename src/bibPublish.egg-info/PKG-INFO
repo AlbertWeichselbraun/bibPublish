@@ -1,0 +1,20 @@
+Metadata-Version: 1.2
+Name: bibPublish
+Version: 0.1
+Summary: bibPublish - publishes bibTex bibliographies.
+Home-page: http://github.com/AlbertWeichselbraun/bibPublish
+Author: Albert Weichselbraun
+Author-email: albert.weichselbraun@fhgr.ch
+License: GPL3
+Description: bibPublish
+        ==========
+        
+        Publishes bibTex bibliographies.
+        
+Platform: UNKNOWN
+Classifier: License :: OSI Approved :: GNU General Public License v3 (GPLv3)
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Requires-Python: >=3.5

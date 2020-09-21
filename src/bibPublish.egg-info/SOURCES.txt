@@ -1,0 +1,12 @@
+README.rst
+setup.py
+scripts/bibPublish.py
+src/bibPublish/__init__.py
+src/bibPublish/entry.py
+src/bibPublish.egg-info/PKG-INFO
+src/bibPublish.egg-info/SOURCES.txt
+src/bibPublish.egg-info/dependency_links.txt
+src/bibPublish.egg-info/requires.txt
+src/bibPublish.egg-info/top_level.txt
+src/bibPublish/template/__init__.py
+src/bibPublish/template/wordpress/__init__.py
