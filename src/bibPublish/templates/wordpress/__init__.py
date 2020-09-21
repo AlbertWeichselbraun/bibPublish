@@ -31,7 +31,7 @@ ATTRIBUTE_FORMAT = {
     'ID': '{ID}',
     'author': '<span class="author">{author}</span>',
     'editor': '<span class="editor">, Ed. {editor}</span>',
-    'title': '<span class="title" title="{title}">“{f"""<a href="{title}">'
+    'title': '<span class="title" title="{title}">“{f"""<a href="{eprint}">'
              '{title}</a>""" if "eprint" in locals() else title}”</span>',
     'year': '<span class="year">{year}</span>',
     'volume': '<span class="volume">{volume}</span>',
