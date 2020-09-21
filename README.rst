@@ -1,7 +1,6 @@
 bibPublish
 ==========
-
-Publishes bibTex bibliographies::
+bibPublish uses templates for publishing BibTex bibliographies in different formats such as HTML and LaTeX::
 
   Usage: publish.py [options]
   
@@ -17,3 +16,8 @@ Supported templates
 
 - worpress: Template used for the Web page. Creates the publication HTML and supporting files (abstracts and bibtex fiels).
 - latex: Used for integrating bibliographies into the CV
+
+
+Background
+----------
+bibPublish is a Python 3+ compatible replacement for the [bibTexSuite](https://github.com/AlbertWeichselbraun/bibTexSuite).
