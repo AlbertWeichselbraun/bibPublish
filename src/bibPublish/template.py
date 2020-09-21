@@ -17,7 +17,7 @@ class Template():
         self.template = importlib.import_module(TEMPLATE_PATH + template_name)
         self.bibtex_entries = bibtex_entries
 
-        # setup outptu infrastructure
+        # setup output infrastructure
         self.output_dir = output_dir
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
@@ -75,9 +75,10 @@ class Template():
             f.write('\n}')
 
     def generate_output(self):
-        output = []
+        output = [self._load_template('', 'head.tmpl')]
         for section in self.template.ENTRY_ORDER:
             output.extend(self.generate_section(section))
+        output.append(self._load_template('', 'foot.tmpl'))
 
         with open(os.path.join(self.output_dir, 'index.html'), 'w') as f:
             f.write('\n'.join(output).replace(' . ', '. '))
