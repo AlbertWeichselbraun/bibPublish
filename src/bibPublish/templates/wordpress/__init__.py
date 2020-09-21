@@ -15,8 +15,10 @@ import os.path
 
 TEMPLATE_PATH = os.path.dirname(__file__)
 
+OUTFILE = 'index.html'
+
 ENTRY_ORDER = 'article',
-ENTRY_ORDER = ('article', 'incollection', 'inproceedings', 'book',
+ENTRY_ORDER = ('article', 'inproceedings', 'incollection', 'book',
                'unpublished', 'phdthesis', 'mastersthesis')
 
 ATTRIBUTE_CLEANUP_RULES = {
