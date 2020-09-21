@@ -3,16 +3,14 @@ bibPublish
 
 Publishes bibTex bibliographies.
 
-```bash
-Usage: publish.py [options]
-
-Options:
-  -h, --help            show this help message and exit
-  -o OUTPUT_DIR, --output-dir=OUTPUT_DIR
-                        output directory.
-  -t TEMPLATE, --template=TEMPLATE
-                        template to use (wordpress).
-```
+  Usage: publish.py [options]
+  
+  Options:
+    -h, --help            show this help message and exit
+    -o OUTPUT_DIR, --output-dir=OUTPUT_DIR
+                          output directory.
+    -t TEMPLATE, --template=TEMPLATE
+                          template to use (wordpress).
 
 Supported templates
 -------------------
