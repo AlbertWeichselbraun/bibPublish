@@ -49,8 +49,8 @@ LINK_FORMAT = {
     'abstract': '<a class="abstract" title="Abstract" '
                 'target="_blank" href="abstract/{ID}.html">'
                 '[Abstract]</a>',
-    'bib': '<a class="bib" target="_blank" title="Citation"'
-           'href="bib/{ID}.bib">[BIB]</a>',
+    'ID': '<a class="bib" target="_blank" title="Citation"'
+          'href="bib/{ID}.bib">[BIB]</a>',
 }
 
 #
