@@ -4,6 +4,7 @@ the corresponding output documents.
 '''
 
 import importlib
+import os
 import os.path
 
 from bibPublish.entry import Entry
@@ -21,16 +22,10 @@ class Template():
         self.output_dir = output_dir
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
-        self.output_dir_abstracts = os.path.join(output_dir, 'abstract')
-        if not os.path.exists(self.output_dir_abstracts):
-            os.makedirs(self.output_dir_abstracts)
-        self.output_dir_bib = os.path.join(output_dir, 'bib')
-        if not os.path.exists(self.output_dir_bib):
-            os.makedirs(self.output_dir_bib)
 
-        # read abstracts template
-        self.abstract_template = open(os.path.join(self.template.TEMPLATE_PATH,
-                                                   'abstract.tmpl')).read()
+        # setup infrastructure for supplemental material
+        self.supplemental_material = self.template.SupplementalMaterial(
+            output_dir)
 
     def _load_template(self, section, template_type):
         return open(os.path.join(self.template.TEMPLATE_PATH,
@@ -51,28 +46,9 @@ class Template():
 
             # set citation key
             entry['citation'] = entry['entry_' + section]
-            self.generate_abstract(entry)
-            self.generate_bibtex(entry)
+            self.supplemental_material.generate(entry)
         output.append(self._load_template(section, '-foot.tmpl'))
         return output
-
-    def generate_abstract(self, entry):
-        if 'abstract' in entry:
-            locals().update(entry)
-            with open(os.path.join(self.output_dir_abstracts,
-                                   (entry['ID'] + '.html')), 'w') as f:
-                f.write(eval("f'''" + self.abstract_template + "'''"))
-
-    def generate_bibtex(self, entry):
-        with open(os.path.join(self.output_dir_bib,
-                               (entry['ID'] + '.bib')), 'w') as f:
-            f.write('@' + entry['ENTRYTYPE'] + '{' + entry['ID'] + ",\n")
-            entries = ['   {} = {{{}}}'.format(key, value) for key, value in
-                       sorted(entry.items())
-                       if key not in ('ENTRYTYPE', 'ID',
-                                      'citation') and '_' not in key]
-            f.write(',\n'.join(entries))
-            f.write('\n}')
 
     def generate_output(self):
         output = [self._load_template('', 'head.tmpl')]
