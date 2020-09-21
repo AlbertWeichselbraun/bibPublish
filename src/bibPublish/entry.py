@@ -48,22 +48,21 @@ class Entry():
         Returns: a dictionary containing all keys formatted according to
             the format strings specified in the FORMAT dictionary.
         '''
-        res = {}
-
         # format attributes
         locals().update(entry)
         for key, format_string in self.template.ATTRIBUTE_FORMAT.items():
-            res[key] = self.normalize(eval("f'''"+format_string+"'''")) \
-                if key in entry else ''
+            entry['_' + key] = self.normalize(
+                eval("f'''"+format_string+"'''")) if key in entry else ''
 
         # format links
         for key, format_string in self.template.LINK_FORMAT.items():
-            res['url_' + key] = self.normalize(
+            entry['link_' + key] = self.normalize(
                 eval("f'''"+format_string+"'''")) if key in entry else ''
 
         # format bibtex entry
-        locals().update(res)
+        locals().update(entry)
         for key, format_string in self.template.ENTRY_FORMAT.items():
-            res['_' + key] = self.normalize(eval("f'''"+format_string+"'''"))
+            entry['entry_' + key] = self.normalize(
+                eval("f'''"+format_string+"'''"))
 
-        return res
+        return entry

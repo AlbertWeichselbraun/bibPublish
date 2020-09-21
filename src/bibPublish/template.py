@@ -50,16 +50,29 @@ class Template():
             output.append(entry_template.format(**entry))
 
             # set citation key
-            entry['citation'] = entry['_' + section]
+            entry['citation'] = entry['entry_' + section]
             self.generate_abstract(entry)
+            self.generate_bibtex(entry)
         output.append(self._load_template(section, '-foot.tmpl'))
         return output
 
     def generate_abstract(self, entry):
         if 'abstract' in entry:
+            locals().update(entry)
             with open(os.path.join(self.output_dir_abstracts,
                                    (entry['ID'] + '.html')), 'w') as f:
-                f.write(self.abstract_template.format(**entry))
+                f.write(eval("f'''" + self.abstract_template + "'''"))
+
+    def generate_bibtex(self, entry):
+        with open(os.path.join(self.output_dir_bib,
+                               (entry['ID'] + '.bib')), 'w') as f:
+            f.write('@' + entry['ENTRYTYPE'] + '{' + entry['ID'] + ",\n")
+            entries = ['   {} = {{{}}}'.format(key, value) for key, value in
+                       sorted(entry.items())
+                       if key not in ('ENTRYTYPE', 'ID',
+                                      'citation') and '_' not in key]
+            f.write(',\n'.join(entries))
+            f.write('\n}')
 
     def generate_output(self):
         output = []
