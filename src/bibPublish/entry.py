@@ -35,13 +35,11 @@ class Entry():
     The Entry class, responsible for formatting a single entry.
     '''
 
-    def __init__(self, config):
-        self.cleanup = config['string_replacements']
-        self.attribute_expansions = config['attribute_expansions']
-        self.links = config['links']
+    def __init__(self, template):
+        self.template = template
 
     def normalize(self, value):
-        for _search, _replace in self.cleanup.items():
+        for _search, _replace in self.template.ATTRIBUTE_CLEANUP_RULES.items():
             value = value.replace(_search, _replace)
         return value
 
@@ -51,11 +49,21 @@ class Entry():
             the format strings specified in the FORMAT dictionary.
         '''
         res = {}
+
+        # format attributes
         locals().update(entry)
-        for key, format_string in self.attribute_expansions.items():
-            print(key, format_string)
-            res[key] = self.normalize(eval(format_string)) \
-                if (key in entry) or (key.startswith('_') and
-                                      key[1:] in entry) else ''
-        print(res)
+        for key, format_string in self.template.ATTRIBUTE_FORMAT.items():
+            res[key] = self.normalize(eval("f'''"+format_string+"'''")) \
+                if key in entry else ''
+
+        # format links
+        for key, format_string in self.template.LINK_FORMAT.items():
+            res['url_' + key] = self.normalize(
+                eval("f'''"+format_string+"'''")) if key in entry else ''
+
+        # format bibtex entry
+        locals().update(res)
+        for key, format_string in self.template.ENTRY_FORMAT.items():
+            res['_' + key] = self.normalize(eval("f'''"+format_string+"'''"))
+
         return res

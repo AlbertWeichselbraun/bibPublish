@@ -3,12 +3,13 @@
 '''
 bibPublish template configuration
 '''
-from os.path import basename
+from os.path import dirname
 
-TEMPLATE_PATH = basename(__file__)
+TEMPLATE_PATH = dirname(__file__)
 
-ENTRY_ORDER = ('article', 'incollection', 'inproceedings', 'book',
-               'unpublished', 'phdthesis', 'mastersthesis')
+ENTRY_ORDER = 'article',
+#ENTRY_ORDER = ('article', 'incollection', 'inproceedings', 'book',
+#               'unpublished', 'phdthesis', 'mastersthesis')
 
 ATTRIBUTE_CLEANUP_RULES = {
     '--': '-',
@@ -21,30 +22,42 @@ ATTRIBUTE_CLEANUP_RULES = {
 
 
 ATTRIBUTE_FORMAT = {
+    'ID': '{ID}',
     'author': '<span class="author">{author}</span>',
     'editor': '<span class="editor">, Ed. {editor}</span>',
     'title': '<span class="title" title="{title}">“{title}”</span>',
-    'volume': '<span class="volume">{volume}</volume>',
-    'number': '(<span class="number">{number}</span>)',
+    'year': '<span class="year">{year}</span>',
+    'volume': '<span class="volume">{volume}</span>',
+    'number': ' (<span class="number">{number}</span>)',
     'pages': ':<span class="pages">{pages}</span>',
     'journal': '<span class="booktitle">{journal}</span>',
     'booktitle': ', <span class="booktitle">{booktitle}</span>',
     'address': ', <span class="address">{address}</span>',
     'publisher': '<span class="publisher">:{publisher}</span>',
+    'school': '<span class="school">:{school}</span>',
+    'eprint': '{eprint}',
     'note': ', {note}',
     'coins': '',
+    'keywords': '{keywords}',
+    'abstract': '{abstract}',
+}
+
+# links: accessible via url_eprint
+LINK_FORMAT = {
     'eprint': '<a class="download" title="{title}" href="{eprint}">'
               '[PDF]</a>',
     'abstract': '<a class="abstract" title="Abstract" '
                 'target="_blank" href="abstract/{ID}.html">'
                 '[Abstract]</a>',
     'bib': '<a class="bib" target="_blank" title="Citation"'
-           'href="bibtex/{ID}.bib">[BIB]</a>',
+           'href="bib/{ID}.bib">[BIB]</a>',
 }
 
+#
+# entries: accessible via _entry
 ENTRY_FORMAT = {
     'article': '{author}. ({year}). {title}. {journal} '
-               '{number}({volume}):{pages}{note}',
+               '{volume}{number}{pages}{note}',
     'inproceedings':  '{author}. ({year}). {title}. {booktitle}'
                       '{address}{note}',
     'incollection': '{author}. ({year}). {title}. {booktitle}'

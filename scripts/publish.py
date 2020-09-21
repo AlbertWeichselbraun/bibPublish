@@ -10,7 +10,7 @@ import bibtexparser
 from bibtexparser.bparser import BibTexParser
 from optparse import OptionParser
 
-from bibPulish import Template
+from bibPublish.template import Template
 
 DEFAULT_TEMPLATE = 'wordpress'
 
