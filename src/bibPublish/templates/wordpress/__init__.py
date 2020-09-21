@@ -8,8 +8,8 @@ from os.path import dirname
 TEMPLATE_PATH = dirname(__file__)
 
 ENTRY_ORDER = 'article',
-#ENTRY_ORDER = ('article', 'incollection', 'inproceedings', 'book',
-#               'unpublished', 'phdthesis', 'mastersthesis')
+ENTRY_ORDER = ('article', 'incollection', 'inproceedings', 'book',
+               'unpublished', 'phdthesis', 'mastersthesis')
 
 ATTRIBUTE_CLEANUP_RULES = {
     '--': '-',
@@ -31,10 +31,10 @@ ATTRIBUTE_FORMAT = {
     'number': ' (<span class="number">{number}</span>)',
     'pages': ':<span class="pages">{pages}</span>',
     'journal': '<span class="booktitle">{journal}</span>',
-    'booktitle': ', <span class="booktitle">{booktitle}</span>',
+    'booktitle': ' <span class="booktitle">{booktitle}</span>',
     'address': ', <span class="address">{address}</span>',
     'publisher': '<span class="publisher">:{publisher}</span>',
-    'school': '<span class="school">:{school}</span>',
+    'school': '<span class="school">{school}</span>',
     'eprint': '{eprint}',
     'note': ', {note}',
     'coins': '',
@@ -65,5 +65,5 @@ ENTRY_FORMAT = {
     'book': '{author}. ({year}). {title}. {publisher}{address}',
     'unpublished': '{author}. ({year}). {title}{note}',
     'phdthesis': '{author}. ({year}). {title}, {school}',
-    'masterthesis': '{author}. ({year}). {title}, {school}',
+    'mastersthesis': '{author}. ({year}). {title}, {school}',
 }
