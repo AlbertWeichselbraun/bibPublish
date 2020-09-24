@@ -39,7 +39,7 @@ setup(
 
     # Scripts
     scripts=[
-        'scripts/bibPublish.py'
+        'scripts/publish.py'
     ],
 
     # Requirements
