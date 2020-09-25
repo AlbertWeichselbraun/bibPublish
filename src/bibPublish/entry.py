@@ -48,6 +48,9 @@ class Entry():
         Returns: a dictionary containing all keys formatted according to
             the format strings specified in the FORMAT dictionary.
         '''
+        # always standardize the author entry
+        entry['author'] = format_author(entry['author'])
+
         # format attributes
         locals().update(entry)
         for key, format_string in self.template.ATTRIBUTE_FORMAT.items():
