@@ -37,8 +37,8 @@ ATTRIBUTE_FORMAT = {
     'title': '<span class="title" title="{title}">“{f"""<a href="{eprint}">'
              '{title}</a>""" if "eprint" in locals() else title}”</span>',
     'year': '<span class="year">{year}</span>',
-    'volume': '<span class="volume">{volume}</span>',
-    'number': ' (<span class="number">{number}</span>)',
+    'volume': ', <span class="volume">{volume}</span>',
+    'number': '(<span class="number">{number}</span>)',
     'pages': ':<span class="pages">{pages}</span>',
     'journal': '<span class="booktitle">{journal}</span>',
     'booktitle': ' <span class="booktitle">{booktitle}</span>',
@@ -66,7 +66,7 @@ LINK_FORMAT = {
 #
 # entries: accessible via entry.fieldname
 ENTRY_FORMAT = {
-    'article': '{_author}. ({_year}). {_title}. {_journal} '
+    'article': '{_author}. ({_year}). {_title}. {_journal}'
                '{_volume}{_number}{_pages}{_note}',
     'inproceedings':  '{_author}. ({_year}). {_title}. {_booktitle}'
                       '{_address}{_note}',

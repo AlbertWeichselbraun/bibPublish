@@ -30,8 +30,8 @@ ATTRIBUTE_FORMAT = {
     'editor': ', Ed. {editor}',
     'title': '\\emph{{{title}}}',
     'year': '{year}',
-    'volume': '{volume}',
-    'number': ' ({number})',
+    'volume': ', {volume}',
+    'number': '({number})',
     'pages': ':{pages}',
     'journal': '{journal}',
     'booktitle': ' {booktitle}',
@@ -59,7 +59,7 @@ LINK_FORMAT = {
 #
 # entries: accessible via entry.fieldname
 ENTRY_FORMAT = {
-    'article': '{_author}. ({_year}). {_title}. {_journal} '
+    'article': '{_author}. ({_year}). {_title}. {_journal}'
                '{_volume}{_number}{_pages}{_note}',
     'inproceedings':  '{_author}. ({_year}). {_title}. {_booktitle}'
                       '{_address}{_note}',
