@@ -19,8 +19,8 @@ TEMPLATE_PATH = os.path.dirname(__file__)
 OUTFILE = 'index.html'
 
 ENTRY_ORDER = ('article', 'inproceedings', 'incollection', 'book',
-               'unpublished', 'phdthesis', 'mastersthesis',
-               'techreport')
+               'techreport', 'phdthesis', 'mastersthesis',
+               'unpublished', )
 
 ATTRIBUTE_CLEANUP_RULES = {
     '--': '-',
