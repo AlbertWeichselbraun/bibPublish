@@ -19,7 +19,8 @@ TEMPLATE_PATH = os.path.dirname(__file__)
 OUTFILE = 'index.html'
 
 ENTRY_ORDER = ('article', 'inproceedings', 'incollection', 'book',
-               'unpublished', 'phdthesis', 'mastersthesis')
+               'unpublished', 'phdthesis', 'mastersthesis',
+               'techreport')
 
 ATTRIBUTE_CLEANUP_RULES = {
     '--': '-',
@@ -76,7 +77,9 @@ ENTRY_FORMAT = {
     'unpublished': '{_author}. ({_year}). {_title}{_note}',
     'phdthesis': '{_author}. ({_year}). {_title}, {_school}',
     'mastersthesis': '{_author}. ({_year}). {_title}, {_school}',
-}
+    'techreport': '{_author}. ({_year}). {_title}. {_journal}'
+                  '{_volume}{_number}{_pages}{_note}',
+ }
 
 
 #
