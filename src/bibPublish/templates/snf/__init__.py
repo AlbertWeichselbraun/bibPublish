@@ -16,9 +16,10 @@ import os.path
 TEMPLATE_PATH = os.path.dirname(__file__)
 
 # name of the main output file
-OUTFILE = 'publications.html'
+OUTFILE = 'index.html'
 
-ENTRY_ORDER = ('article', 'inproceedings', 'incollection', 'unpublished')
+ENTRY_ORDER = ('article', 'inproceedings', 'incollection', 'book',
+               'techreport', )
 
 ATTRIBUTE_CLEANUP_RULES = {
     '--': '-',
@@ -31,33 +32,40 @@ ATTRIBUTE_CLEANUP_RULES = {
 
 ATTRIBUTE_FORMAT = {
     'ID': '{ID}',
-    'author': '{author.replace("Weichselbraun, Albert", "<b>Weichselbraun, Albert</b>")}',
-    'editor': ', Ed. {editor}',
-    'title': '“{title}”',
-    'year': '<b>{year}</b>',
-    'volume': '{volume}',
-    'number': ' ({number})',
-    'pages': ':{pages}',
-    'journal': '{journal}',
-    'booktitle': ' {booktitle}',
-    'address': ', {address}',
-    'publisher': ':{publisher}',
-    'school': '{school}',
+    'author': '<span class="author">{author}</span>',
+    'editor': '<span class="editor">, Ed. {editor}</span>',
+    'title': '<span class="title" title="{title}">“{f"""<a href="{eprint}">'
+             '{title}</a>""" if "eprint" in locals() else title}”</span>',
+    'year': '<span class="year">{year}</span>',
+    'volume': ', <span class="volume">{volume}</span>',
+    'number': '(<span class="number">{number}</span>)',
+    'pages': ':<span class="pages">{pages}</span>',
+    'journal': '<span class="booktitle">{journal}</span>',
+    'booktitle': ' <span class="booktitle">{booktitle}</span>',
+    'address': ', <span class="address">{address}</span>',
+    'publisher': '<span class="publisher">:{publisher}</span>',
+    'school': '<span class="school">{school}</span>',
     'eprint': '{eprint}',
     'note': ', {note}',
     'coins': '',
     'keywords': '{keywords}',
-    'abstract': '{abstract}',
 }
 
 # links: accessible via link.fieldname
 LINK_FORMAT = {
+    'eprint': '<a class="download" title="{title}" href="{eprint}">'
+              '[PDF]</a>',
+    'abstract': '<a class="abstract" title="Abstract" '
+                'target="_blank" href="abstract/{ID}.html">'
+                '[Abstract]</a>',
+    'ID': '<a class="bib" target="_blank" title="Citation"'
+          'href="bib/{ID}.bib">[BIB]</a>',
 }
 
 #
 # entries: accessible via entry.fieldname
 ENTRY_FORMAT = {
-    'article': '{_author}. ({_year}). {_title}. {_journal} '
+    'article': '{_author}. ({_year}). {_title}. {_journal}'
                '{_volume}{_number}{_pages}{_note}',
     'inproceedings':  '{_author}. ({_year}). {_title}. {_booktitle}'
                       '{_address}{_note}',
@@ -67,7 +75,9 @@ ENTRY_FORMAT = {
     'unpublished': '{_author}. ({_year}). {_title}{_note}',
     'phdthesis': '{_author}. ({_year}). {_title}, {_school}',
     'mastersthesis': '{_author}. ({_year}). {_title}, {_school}',
-}
+    'techreport': '{_author}. ({_year}). {_title}. {_journal}'
+                  '{_volume}{_number}{_pages}{_note}',
+ }
 
 
 #
@@ -76,7 +86,8 @@ ENTRY_FORMAT = {
 class SupplementalMaterial():
 
     def __init__(self, output_dir):
+        # setup output directories
         pass
 
-    def generate(self, entry):
+    def generate(self, args):
         pass
