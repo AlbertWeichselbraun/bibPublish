@@ -39,7 +39,7 @@ if len(args) == 0:
     parser.print_help()
     sys.exit()
 
-parser = BibTexParser()
+parser = BibTexParser(interpolate_strings=False)
 parser.add_missing_from_crossref = True
 with open(args[0]) as bibfile:
     # only consider entries that match the given filter criteria
