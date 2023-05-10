@@ -48,6 +48,10 @@ class Entry():
         Returns: a dictionary containing all keys formatted according to
             the format strings specified in the FORMAT dictionary.
         '''
+        # create cleaned entries
+        for key, value in list(entry.items()):
+            entry['__' + key] = self.normalize(value)
+
         # always standardize the author entry
         entry['author'] = format_author(entry['author'])
 
