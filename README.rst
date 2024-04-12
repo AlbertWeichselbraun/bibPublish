@@ -1,8 +1,8 @@
-bibPublish
+bibpublish
 ==========
-bibPublish uses templates for publishing BibTex bibliographies in different formats such as HTML and LaTeX::
+bibpublish uses templates for publishing BibTex bibliographies in different formats such as HTML and LaTeX::
 
-  Usage: publish.py [options]
+  Usage: bibpublish [options]
   
   Options:
     -h, --help            show this help message and exit
@@ -18,7 +18,7 @@ Example
 -------
 Publish all BibTex entries that have been published after 2014::
 
-  ./scripts/publish.py mybib.bib -f 'int(year) > 2014'
+  bibpublish mybib.bib -f 'int(year) > 2014'
 
 Supported templates
 -------------------
