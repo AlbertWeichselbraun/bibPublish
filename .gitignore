@@ -1,3 +1,6 @@
 __pycache__/
 .*.swp
 *.egg-info/
+.idea/
+dist/
+poetry.lock 
