@@ -15,6 +15,7 @@ import os.path
 
 TEMPLATE_PATH = os.path.dirname(__file__)
 
+
 # name of the main output file
 OUTFILE = "index.html"
 
