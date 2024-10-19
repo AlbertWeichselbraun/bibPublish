@@ -7,6 +7,8 @@ bibpublish - publishes bibtex files
 """
 
 import sys
+from pathlib import Path
+
 import bibtexparser
 from bibtexparser.bparser import BibTexParser
 from optparse import OptionParser
@@ -56,7 +58,7 @@ def cli():
             if eval(options.filter):
                 bibtex_entries.append(entry)
 
-        template = Template(options.template, bibtex_entries, options.output_dir)
+        template = Template(options.template, bibtex_entries, Path(options.output_dir))
         template.generate_output()
 
 

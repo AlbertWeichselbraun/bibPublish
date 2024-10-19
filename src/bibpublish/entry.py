@@ -3,9 +3,11 @@
 #
 
 from typing import Dict
+from datetime import datetime
 
 
-def format_author(author_entry):
+def format_author(author_entry: str) -> str:
+    """Standardize the author string."""
     authors = []
     for author in author_entry.replace("\n", " ").split(" and "):
         if "," not in author:
@@ -18,6 +20,18 @@ def format_author(author_entry):
         if len(authors) == 1
         else "{} and {}".format(", ".join(authors[:-1]), authors[-1])
     )
+
+
+def format_date(date: str) -> str:
+    """Format the date as a string."""
+    try:
+        date_obj = datetime.strptime(date, "%Y-%m-%d")
+        # Format the date as "12 December 2024"
+        date = date_obj.strftime("%d %B %Y")
+    except ValueError:
+        # If var is not a date, leave it as is
+        pass
+    return date
 
 
 def format_outlet(entry):
@@ -56,17 +70,18 @@ class Entry:
         Returns: a dictionary containing all keys formatted according to
             the format strings specified in the FORMAT dictionary.
         """
-        # always standardize the author entry
+        # always standardize the author and date entries
         entry["author"] = format_author(entry["author"])
+        if "date" in entry:
+            entry["date"] = format_date(entry["date"])
 
         # format attributes
         locals().update(entry)
         for key, format_string in self.template.ATTRIBUTE_FORMAT.items():
-            entry["_" + key] = (
-                self.normalize(eval("f'''" + format_string + "'''"))
-                if key in entry
-                else ""
-            )
+            try:
+                entry["_" + key] = self.normalize(eval("f'''" + format_string + "'''"))
+            except NameError:
+                entry["_" + key] = ""
 
         # format links
         for key, format_string in self.template.LINK_FORMAT.items():

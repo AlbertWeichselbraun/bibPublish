@@ -1,10 +1,10 @@
 [tool.poetry]
 name = "bibpublish"
-version = "1.0.0"
+version = "1.0.1"
 description = "bibpublish - publishes bibTex bibliographies."
 authors = ["Albert Weichselbraun <albert@weichselbraun.net>"]
 license = "GPL-3.0"
-readme = "README.rst"
+readme = "README.md"
 homepage = "http://github.com/AlbertWeichselbraun/bibPublish"
 repository = "http://github.com/AlbertWeichselbraun/bibPublish"
 keywords = ["bibPublish", "bibtex", "publish"]
@@ -16,7 +16,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
 python = "^3.8 || ^3.9 || ^3.10 || ^3.11 || ^3.12"
-bibtexparser = "^1.4.1"
+bibtexparser = "^1.4.2"
 
 [tool.poetry.scripts]
 bibpublish = "bibpublish.cli:cli"

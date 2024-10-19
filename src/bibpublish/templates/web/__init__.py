@@ -13,7 +13,8 @@ Template namespaces:
 import os
 from pathlib import Path
 
-TEMPLATE_PATH = Path(__file__).parent
+TEMPLATE_PATH = (Path(__file__)).parent
+
 
 # name of the main output file
 OUTFILE = "index.html"
@@ -49,12 +50,17 @@ ATTRIBUTE_FORMAT = {
     "number": '(<span class="number">{number}</span>)',
     "pages": ':<span class="pages">{pages}</span>',
     "journal": '<span class="booktitle">{journal}</span>',
+    "doi": '. doi: <span class="doi"><a href="https://doi.org/{doi}">{doi}</a></span>.',
     "booktitle": ' <span class="booktitle">{booktitle}</span>',
     "address": ', <span class="address">{address}</span>',
     "publisher": '<span class="publisher">:{publisher}</span>',
     "school": '<span class="school">{school}</span>',
+    "type": "{type}",
+    "date": "{date}",
+    "location": "{location}",
     "eprint": "{eprint}",
     "note": ", {note}",
+    "event_name": "{note}",
     "coins": "",
     "keywords": "{keywords}",
     "abstract": "{abstract}",
@@ -75,12 +81,13 @@ LINK_FORMAT = {
 # entries: accessible via entry.fieldname
 ENTRY_FORMAT = {
     "article": "{_author}. ({_year}). {_title}. {_journal}"
-    "{_volume}{_number}{_pages}{_note}",
+    "{_volume}{_number}{_pages}{_note}{_doi}",
     "inproceedings": "{_author}. ({_year}). {_title}. {_booktitle}" "{_address}{_note}",
     "incollection": "{_author}. ({_year}). {_title}. {_booktitle}"
-    "{_address}{_publisher}{_pages}",
+    "{_address}{_publisher}{_pages}{_doi}",
     "book": "{_author}. ({_year}). {_title}. {_publisher}{_address}",
-    "unpublished": "{_author}. ({_year}). {_title}{_note}",
+    # talks
+    "unpublished": "{_title} ({_year}). {_type}. {_event_name}. {_location}. {_date}",
     "phdthesis": "{_author}. ({_year}). {_title}, {_school}",
     "mastersthesis": "{_author}. ({_year}). {_title}, {_school}",
     "techreport": "{_author}. ({_year}). {_title}. {_journal}"
@@ -88,6 +95,9 @@ ENTRY_FORMAT = {
 }
 
 
+#
+# class used for publishing supplemental material
+#
 #
 # class used for publishing supplemental material
 #
@@ -99,6 +109,7 @@ class SupplementalMaterial:
         self.output_path_abstracts.mkdir(parents=True, exist_ok=True)
         self.output_path_bib = output_path / "bib"
         self.output_path_bib.mkdir(parents=True, exist_ok=True)
+        print("**", output_path, self.output_path_abstracts, self.output_path_bib)
 
         # read abstracts template
         self.abstract_template = (TEMPLATE_PATH / "abstract.tmpl").read_text()
