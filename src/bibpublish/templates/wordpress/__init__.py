@@ -11,9 +11,9 @@ Template namespaces:
     - entry_fieldname: formatting of entries based on ENTRY_FORMAT
 """
 import os
-import os.path
+from pathlib import Path
 
-TEMPLATE_PATH = os.path.dirname(__file__)
+TEMPLATE_PATH = Path(__file__).parent
 
 # name of the main output file
 OUTFILE = "index.html"
@@ -93,19 +93,15 @@ ENTRY_FORMAT = {
 #
 class SupplementalMaterial:
 
-    def __init__(self, output_dir):
+    def __init__(self, output_path: Path):
         # setup output directories
-        self.output_dir_abstracts = os.path.join(output_dir, "abstract")
-        if not os.path.exists(self.output_dir_abstracts):
-            os.makedirs(self.output_dir_abstracts)
-        self.output_dir_bib = os.path.join(output_dir, "bib")
-        if not os.path.exists(self.output_dir_bib):
-            os.makedirs(self.output_dir_bib)
+        self.output_path_abstracts = output_path / "abstract"
+        self.output_path_abstracts.mkdir(parents=True, exist_ok=True)
+        self.output_path_bib = output_path / "bib"
+        self.output_path_bib.mkdir(parents=True, exist_ok=True)
 
         # read abstracts template
-        self.abstract_template = open(
-            os.path.join(TEMPLATE_PATH, "abstract.tmpl")
-        ).read()
+        self.abstract_template = (TEMPLATE_PATH / "abstract.tmpl").read_text()
 
     def generate(self, entry):
         self.generate_abstract(entry)
@@ -114,13 +110,11 @@ class SupplementalMaterial:
     def generate_abstract(self, entry):
         if "abstract" in entry:
             locals().update(entry)
-            with open(
-                os.path.join(self.output_dir_abstracts, (entry["ID"] + ".html")), "w"
-            ) as f:
+            with (self.output_path_abstracts / (entry["ID"] + ".html")).open("w") as f:
                 f.write(eval("f'''" + self.abstract_template + "'''"))
 
     def generate_bibtex(self, entry):
-        with open(os.path.join(self.output_dir_bib, (entry["ID"] + ".bib")), "w") as f:
+        with (self.output_path_bib / (entry["ID"] + ".bib")).open("w") as f:
             f.write("@" + entry["ENTRYTYPE"] + "{" + entry["ID"] + ",\n")
             entries = [
                 "   {} = {{{}}}".format(key, value)
