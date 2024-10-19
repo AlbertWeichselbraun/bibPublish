@@ -1,23 +1,28 @@
 bibpublish
 ==========
-bibpublish uses templates for publishing BibTex bibliographies in different formats such as HTML and LaTeX::
+bibpublish uses templates for publishing BibTex bibliographies in different formats such as HTML and LaTeX:
 
-  Usage: bibpublish [options]
-  
-  Options:
-    -h, --help            show this help message and exit
-    -o OUTPUT_DIR, --output-dir=OUTPUT_DIR
-                          output directory.
-    -t TEMPLATE, --template=TEMPLATE
-                          template to use (wordpress).
-    -f FILTER, --filter=FILTER
-                          one consider items that match the given
-                          filter criterion.
+```bash
+Usage: bibpublish [options]
+
+Options:
+  -h, --help            show this help message and exit
+  -o OUTPUT_DIR, --output-dir=OUTPUT_DIR
+                        output directory.
+  -t TEMPLATE, --template=TEMPLATE
+                        template to use (wordpress).
+  -f FILTER, --filter=FILTER
+                        one consider items that match the given
+                        filter criterion.
+```
+
 Example
 -------
-Publish all BibTex entries that have been published after 2014::
+Publish all BibTex entries that have been published after 2014:
 
-  bibpublish mybib.bib -f 'int(year) > 2014'
+```bash
+bibpublish mybib.bib -f 'int(year) > 2014'
+```
 
 Installation
 ------------
