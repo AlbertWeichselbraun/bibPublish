@@ -62,6 +62,7 @@ ATTRIBUTE_FORMAT = {
     "coins": "",
     "keywords": "{keywords}",
     "abstract": "{abstract}",
+    "abstract_title": "Abstract: {title}"
 }
 
 # links: accessible via link.fieldname
