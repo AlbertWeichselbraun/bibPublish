@@ -13,18 +13,26 @@ bibpublish uses templates for publishing BibTex bibliographies in different form
     -f FILTER, --filter=FILTER
                           one consider items that match the given
                           filter criterion.
-
 Example
 -------
 Publish all BibTex entries that have been published after 2014::
 
   bibpublish mybib.bib -f 'int(year) > 2014'
 
+Installation
+------------
+I recommend using pipx to install bibpublish::
+
+  pipx install bibpublish
+
+
 Supported templates
 -------------------
 
-- worpress: Template used for the Web page. Creates the publication HTML and supporting files (abstracts and bibtex fiels).
 - latex: Used for integrating bibliographies into the CV
+- snf: Creates an HTML file which is meant for import into a word processing software.
+- web: Template used for the Web page. Creates the publication HTML and supporting files (abstracts and bibtex fiels).
+- wordpress: Legacy version of the web template (without doi support).
 
 
 Background
