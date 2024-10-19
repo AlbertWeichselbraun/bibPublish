@@ -57,5 +57,8 @@ class Template:
             output.extend(self.generate_section(section))
         output.append(self._load_template("", "foot.tmpl"))
 
+        output = "\n".join(output)
+        # cleanup
+        output = output.replace("..", ".").replace(" . ", ". ")
         with open(os.path.join(self.output_dir, self.template.OUTFILE), "w") as f:
-            f.write("\n".join(output).replace(" . ", ". "))
+            f.write(output)

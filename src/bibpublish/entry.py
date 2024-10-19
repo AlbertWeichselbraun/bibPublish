@@ -78,11 +78,10 @@ class Entry:
         # format attributes
         locals().update(entry)
         for key, format_string in self.template.ATTRIBUTE_FORMAT.items():
-            entry["_" + key] = (
-                self.normalize(eval("f'''" + format_string + "'''"))
-                if key in entry
-                else ""
-            )
+            try:
+                entry["_" + key] = self.normalize(eval("f'''" + format_string + "'''"))
+            except NameError:
+                entry["_" + key] = ""
 
         # format links
         for key, format_string in self.template.LINK_FORMAT.items():
