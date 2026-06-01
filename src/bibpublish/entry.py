@@ -38,10 +38,10 @@ def format_outlet(entry):
     outlet = [
         entry.get("journal", None),
         entry.get("booktitle", None),
-        f'ISBN: {entry["isbn"]}' if "isbn" in entry else None,
-        f'pages: {entry["pages"]}' if "pages" in entry else None,
+        f"ISBN: {entry['isbn']}" if "isbn" in entry else None,
+        f"pages: {entry['pages']}" if "pages" in entry else None,
         (
-            f'{entry["volume"]}({entry["number"]})'
+            f"{entry['volume']}({entry['number']})"
             if "volume" in entry and "number" in entry
             else None
         ),
@@ -76,24 +76,22 @@ class Entry:
             entry["date"] = format_date(entry["date"])
 
         # format attributes
-        locals().update(entry)
         for key, format_string in self.template.ATTRIBUTE_FORMAT.items():
             try:
-                entry["_" + key] = self.normalize(eval("f'''" + format_string + "'''"))
+                entry["_" + key] = self.normalize(eval("f'''" + format_string + "'''", entry))
             except NameError:
                 entry["_" + key] = ""
 
         # format links
         for key, format_string in self.template.LINK_FORMAT.items():
             entry["link_" + key] = (
-                self.normalize(eval("f'''" + format_string + "'''"))
+                self.normalize(eval("f'''" + format_string + "'''", entry))
                 if key in entry
                 else ""
             )
 
         # format bibtex entry
-        locals().update(entry)
         for key, format_string in self.template.ENTRY_FORMAT.items():
-            entry["entry_" + key] = self.normalize(eval("f'''" + format_string + "'''"))
+            entry["entry_" + key] = self.normalize(eval("f'''" + format_string + "'''", entry))
 
         return entry

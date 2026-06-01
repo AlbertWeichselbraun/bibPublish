@@ -14,7 +14,6 @@ TEMPLATE_PATH = "bibpublish.templates."
 
 
 class Template:
-
     def __init__(self, template_name, bibtex_entries, output_dir: Path):
         self.template = importlib.import_module(TEMPLATE_PATH + template_name)
         self.bibtex_entries = bibtex_entries

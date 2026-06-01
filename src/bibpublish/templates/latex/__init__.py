@@ -10,6 +10,7 @@ Template namespaces:
     - link_fieldname: formatting of urls based on LINK_FORMAT
     - entry_fieldname: formatting of entries based on ENTRY_FORMAT
 """
+
 import os.path
 
 TEMPLATE_PATH = os.path.dirname(__file__)
@@ -51,7 +52,7 @@ ATTRIBUTE_FORMAT = {
 
 # links: accessible via link.fieldname
 LINK_FORMAT = {
-    "eprint": '<a class="download" title="{title}" href="{eprint}">' "[PDF]</a>",
+    "eprint": '<a class="download" title="{title}" href="{eprint}">[PDF]</a>',
     "abstract": '<a class="abstract" title="Abstract" '
     'target="_blank" href="abstract/{ID}.html">'
     "[Abstract]</a>",
@@ -64,7 +65,7 @@ LINK_FORMAT = {
 ENTRY_FORMAT = {
     "article": "{_author}. ({_year}). {_title}. {_journal}"
     "{_volume}{_number}{_pages}{_note}",
-    "inproceedings": "{_author}. ({_year}). {_title}. {_booktitle}" "{_address}{_note}",
+    "inproceedings": "{_author}. ({_year}). {_title}. {_booktitle}{_address}{_note}",
     "incollection": "{_author}. ({_year}). {_title}. {_booktitle}"
     "{_address}{_publisher}{_pages}",
     "book": "{_author}. ({_year}). {_title}. {_publisher}{_address}",
@@ -78,7 +79,6 @@ ENTRY_FORMAT = {
 # class used for publishing supplemental material
 #
 class SupplementalMaterial:
-
     def __init__(self, output_dir):
         pass
 

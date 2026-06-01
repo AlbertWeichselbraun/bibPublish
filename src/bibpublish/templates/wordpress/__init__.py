@@ -10,7 +10,7 @@ Template namespaces:
     - link_fieldname: formatting of urls based on LINK_FORMAT
     - entry_fieldname: formatting of entries based on ENTRY_FORMAT
 """
-import os
+
 from pathlib import Path
 
 TEMPLATE_PATH = Path(__file__).parent
@@ -63,7 +63,7 @@ ATTRIBUTE_FORMAT = {
 
 # links: accessible via link.fieldname
 LINK_FORMAT = {
-    "eprint": '<a class="download" title="{title}" href="{eprint}">' "[PDF]</a>",
+    "eprint": '<a class="download" title="{title}" href="{eprint}">[PDF]</a>',
     "abstract": '<a class="abstract" title="Abstract" '
     'target="_blank" href="abstract/{ID}.html">'
     "[Abstract]</a>",
@@ -76,7 +76,7 @@ LINK_FORMAT = {
 ENTRY_FORMAT = {
     "article": "{_author}. ({_year}). {_title}. {_journal}"
     "{_volume}{_number}{_pages}{_note}",
-    "inproceedings": "{_author}. ({_year}). {_title}. {_booktitle}" "{_address}{_note}",
+    "inproceedings": "{_author}. ({_year}). {_title}. {_booktitle}{_address}{_note}",
     "incollection": "{_author}. ({_year}). {_title}. {_booktitle}"
     "{_address}{_publisher}{_pages}",
     "book": "{_author}. ({_year}). {_title}. {_publisher}{_address}",
@@ -92,7 +92,6 @@ ENTRY_FORMAT = {
 # class used for publishing supplemental material
 #
 class SupplementalMaterial:
-
     def __init__(self, output_path: Path):
         # setup output directories
         self.output_path_abstracts = output_path / "abstract"
@@ -109,9 +108,8 @@ class SupplementalMaterial:
 
     def generate_abstract(self, entry):
         if "abstract" in entry:
-            locals().update(entry)
             with (self.output_path_abstracts / (entry["ID"] + ".html")).open("w") as f:
-                f.write(eval("f'''" + self.abstract_template + "'''"))
+                f.write(eval("f'''" + self.abstract_template + "'''", entry))
 
     def generate_bibtex(self, entry):
         with (self.output_path_bib / (entry["ID"] + ".bib")).open("w") as f:

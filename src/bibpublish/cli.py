@@ -36,7 +36,7 @@ def get_parser():
         "--filter",
         dest="filter",
         default="True",
-        help="one consider items that match the given filter" "criterion.",
+        help="one consider items that match the given filtercriterion.",
     )
     return parser
 
