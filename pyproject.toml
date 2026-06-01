@@ -1,6 +1,6 @@
 [project]
 name = "bibpublish"
-version = "1.0.1"
+version = "1.0.2"
 description = "bibpublish - publishes bibTex bibliographies."
 authors = [
     { name = "Albert Weichselbraun", email = "albert@weichselbraun.net" }
